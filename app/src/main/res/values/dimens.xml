@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="fab_margin">30dp</dimen>
+    <dimen name="heading">24sp</dimen>
+</resources>
