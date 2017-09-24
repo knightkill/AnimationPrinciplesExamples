@@ -8,9 +8,8 @@
     android:background="@color/colorAccent"
     tools:context="com.anormaly.labs.animationdemo.IndexActivity">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        layout="@layout/content_splash"
+    <FrameLayout
+        android:id="@+id/content_view"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         android:layout_height="0dp"

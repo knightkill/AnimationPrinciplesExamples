@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class SquashAndStretchFragment extends Fragment implements IndexActivity.OnReplayClicked
+public class SquashAndStretchFragment extends Fragment implements IndexActivity.OnClickListener
 {
 
     private static final String TAG = SquashAndStretchFragment.class.getSimpleName();
@@ -58,7 +58,7 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        ((IndexActivity) getActivity()).setOnReplayClickedListener(this);
+        ((IndexActivity) getActivity()).setOnClickListener(this);
     }
 
     @Override
@@ -75,6 +75,18 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
         }
 
         //log();
+
+    }
+
+    @Override
+    public void onNextClick()
+    {
+        ActivityUtils.addFragmentToActivity(getFragmentManager(),AnticipationFragment.newInstance(box.getX(),box.getY()),R.id.content_view);
+    }
+
+    @Override
+    public void onPrevClick()
+    {
 
     }
 

@@ -4,11 +4,11 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +19,8 @@ public class IndexActivity extends AppCompatActivity
 {
 
     private static final String TAG = IndexActivity.class.getSimpleName();
+    public static final String BOX_POSITION_X = "box_x";
+    public static final String BOX_POSITION_Y = "box_y";
 
     @BindView(R.id.next_fab)
     FloatingActionButton nextFAB;
@@ -29,11 +31,11 @@ public class IndexActivity extends AppCompatActivity
     @BindView(R.id.replay_fab)
     FloatingActionButton replayFAB;
 
-    @BindView(R.id.pager)
-    ViewPager pager;
+    @BindView(R.id.content_view)
+    FrameLayout contentLayout;
 
     private AnimatorSet replayAnimator;
-    private OnReplayClicked mOnReplayClicked;
+    private OnClickListener mOnClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,15 +43,10 @@ public class IndexActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),SquashAndStretchFragment.newInstance(),R.id.content_view);
         animations();
-        initPager();
-    }
 
-    private void initPager()
-    {
-        pager.setAdapter(new IndexPagerAdapter(getSupportFragmentManager()));
     }
-
     private void animations()
     {
         nextAnimation();
@@ -94,6 +91,10 @@ public class IndexActivity extends AppCompatActivity
     @OnClick(R.id.next_fab)
     public void onNextClick(View view)
     {
+        if (mOnClickListener != null)
+        {
+            mOnClickListener.onNextClick();
+        }
     }
 
     @OnTouch(R.id.replay_fab)
@@ -106,9 +107,9 @@ public class IndexActivity extends AppCompatActivity
                 replayAnimator.start();
                 return true;
             case MotionEvent.ACTION_UP:
-                if (mOnReplayClicked != null)
+                if (mOnClickListener != null)
                 {
-                    mOnReplayClicked.onReplayClick();
+                    mOnClickListener.onReplayClick();
                 }
                 return true;
             default:
@@ -119,16 +120,21 @@ public class IndexActivity extends AppCompatActivity
     @OnClick(R.id.prev_fab)
     public void onPrevClick(View view)
     {
-
+        if (mOnClickListener != null)
+        {
+            mOnClickListener.onPrevClick();
+        }
     }
 
-    public void setOnReplayClickedListener(OnReplayClicked onReplayClicked)
+    public void setOnClickListener(OnClickListener onClickListener)
     {
-        mOnReplayClicked = onReplayClicked;
+        mOnClickListener = onClickListener;
     }
 
-    public interface OnReplayClicked
+    public interface OnClickListener
     {
         void onReplayClick();
+        void onNextClick();
+        void onPrevClick();
     }
 }
