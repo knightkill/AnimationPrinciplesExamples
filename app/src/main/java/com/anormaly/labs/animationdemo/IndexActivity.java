@@ -1,12 +1,11 @@
 package com.anormaly.labs.animationdemo;
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -16,10 +15,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
 
-public class SplashActivity extends AppCompatActivity
+public class IndexActivity extends AppCompatActivity
 {
 
-    private static final String TAG = SplashActivity.class.getSimpleName();
+    private static final String TAG = IndexActivity.class.getSimpleName();
 
     @BindView(R.id.next_fab)
     FloatingActionButton nextFAB;
@@ -30,8 +29,9 @@ public class SplashActivity extends AppCompatActivity
     @BindView(R.id.replay_fab)
     FloatingActionButton replayFAB;
 
-    private AnimatorSet replayDownAnimator;
-    private AnimatorSet replayUpAnimator;
+    @BindView(R.id.pager)
+    ViewPager pager;
+
     private AnimatorSet replayAnimator;
     private OnReplayClicked mOnReplayClicked;
 
@@ -42,6 +42,12 @@ public class SplashActivity extends AppCompatActivity
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         animations();
+        initPager();
+    }
+
+    private void initPager()
+    {
+        pager.setAdapter(new IndexPagerAdapter(getSupportFragmentManager()));
     }
 
     private void animations()
@@ -52,10 +58,7 @@ public class SplashActivity extends AppCompatActivity
     private void nextAnimation()
     {
         float percent = 0.80f;
-        float halfThePercent = (percent + (1-percent)/2);
         float principlePercent = 1.1f;
-        float halfThePrinciplePercent = (principlePercent + (1-principlePercent)/2);
-        float translateY= 0;
         long duration = 300;
         DecelerateInterpolator interpolator = new DecelerateInterpolator();
 
@@ -65,27 +68,23 @@ public class SplashActivity extends AppCompatActivity
                 ObjectAnimator.ofFloat(nextFAB, "scaleY", nextFAB.getScaleY(), nextFAB.getScaleY() * percent),
                 ObjectAnimator.ofFloat(prevFAB, "scaleX", prevFAB.getScaleX(), prevFAB.getScaleX() * percent),
                 ObjectAnimator.ofFloat(prevFAB, "scaleY", prevFAB.getScaleY(), prevFAB.getScaleY() * percent),
-                ObjectAnimator.ofFloat(replayFAB, "scaleX", replayFAB.getScaleX(), replayFAB.getScaleX()*principlePercent),
-                ObjectAnimator.ofFloat(replayFAB, "scaleY", replayFAB.getScaleY(), replayFAB.getScaleY()*principlePercent)
-
+                ObjectAnimator.ofFloat(replayFAB, "scaleX", replayFAB.getScaleX(), replayFAB.getScaleX() * principlePercent),
+                ObjectAnimator.ofFloat(replayFAB, "scaleY", replayFAB.getScaleY(), replayFAB.getScaleY() * principlePercent)
         );
-
-
-
 
         AnimatorSet replayUpAnimator = new AnimatorSet();
         replayUpAnimator.playTogether(
-                ObjectAnimator.ofFloat(nextFAB, "scaleX", nextFAB.getScaleX()*percent, nextFAB.getScaleX()),
-                ObjectAnimator.ofFloat(nextFAB, "scaleY", nextFAB.getScaleY()*percent, nextFAB.getScaleY()),
-                ObjectAnimator.ofFloat(prevFAB, "scaleX", prevFAB.getScaleX()*percent, prevFAB.getScaleX()),
-                ObjectAnimator.ofFloat(prevFAB, "scaleY", prevFAB.getScaleY()*percent, prevFAB.getScaleY()),
-                ObjectAnimator.ofFloat(replayFAB, "scaleX", replayFAB.getScaleX()*principlePercent, replayFAB.getScaleX()),
-                ObjectAnimator.ofFloat(replayFAB, "scaleY", replayFAB.getScaleY()*principlePercent, replayFAB.getScaleY())
+                ObjectAnimator.ofFloat(nextFAB, "scaleX", nextFAB.getScaleX() * percent, nextFAB.getScaleX()),
+                ObjectAnimator.ofFloat(nextFAB, "scaleY", nextFAB.getScaleY() * percent, nextFAB.getScaleY()),
+                ObjectAnimator.ofFloat(prevFAB, "scaleX", prevFAB.getScaleX() * percent, prevFAB.getScaleX()),
+                ObjectAnimator.ofFloat(prevFAB, "scaleY", prevFAB.getScaleY() * percent, prevFAB.getScaleY()),
+                ObjectAnimator.ofFloat(replayFAB, "scaleX", replayFAB.getScaleX() * principlePercent, replayFAB.getScaleX()),
+                ObjectAnimator.ofFloat(replayFAB, "scaleY", replayFAB.getScaleY() * principlePercent, replayFAB.getScaleY())
 
         );
 
         replayAnimator = new AnimatorSet();
-        replayAnimator.playSequentially(replayDownAnimator,replayUpAnimator);
+        replayAnimator.playSequentially(replayDownAnimator, replayUpAnimator);
         replayAnimator.setInterpolator(interpolator);
         replayAnimator.setStartDelay(0);
         replayAnimator.setDuration(duration);
@@ -107,7 +106,8 @@ public class SplashActivity extends AppCompatActivity
                 replayAnimator.start();
                 return true;
             case MotionEvent.ACTION_UP:
-                if(mOnReplayClicked!=null){
+                if (mOnReplayClicked != null)
+                {
                     mOnReplayClicked.onReplayClick();
                 }
                 return true;
@@ -127,7 +127,8 @@ public class SplashActivity extends AppCompatActivity
         mOnReplayClicked = onReplayClicked;
     }
 
-    public interface OnReplayClicked{
-        public void onReplayClick();
+    public interface OnReplayClicked
+    {
+        void onReplayClick();
     }
 }

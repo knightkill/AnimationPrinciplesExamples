@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context="com.anormaly.labs.animationdemo.SplashActivity">
+    tools:context="com.anormaly.labs.animationdemo.IndexActivity">
 
-    <include
-        android:id="@+id/splash_include"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
         layout="@layout/content_splash"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"

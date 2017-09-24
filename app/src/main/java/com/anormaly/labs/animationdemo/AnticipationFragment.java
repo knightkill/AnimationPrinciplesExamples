@@ -7,11 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class AnticipationFragment extends Fragment
+public class AnticipationFragment extends Fragment implements IndexActivity.OnReplayClicked
 {
+
+    @BindView(R.id.box)
+    View box;
+
     public AnticipationFragment()
     {
         // Required empty public constructor
@@ -34,4 +39,9 @@ public class AnticipationFragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onReplayClick()
+    {
+        box.setRotationX(30);
+    }
 }
