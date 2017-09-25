@@ -2,6 +2,7 @@ package com.anormaly.labs.animationdemo;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,8 +29,10 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
 {
 
     private static final String TAG = SquashAndStretchFragment.class.getSimpleName();
+
+    @Nullable
     @BindView(R.id.box)
-    View box;
+    BoxView box;
 
     @BindView(R.id.layout)
     ConstraintLayout layout;
@@ -84,10 +88,26 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
         ActivityUtils.addFragmentToActivity(getFragmentManager(),AnticipationFragment.newInstance(box.getX(),box.getY()),R.id.content_view);
     }
 
+    boolean appCloseConfirmation = false;
+
     @Override
     public void onPrevClick()
     {
+        if (appCloseConfirmation) {
+            getActivity().finish();
+            return;
+        }
 
+        this.appCloseConfirmation = true;
+        Toast.makeText(getContext(), "Click again to exit this Awesomeness!", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                appCloseConfirmation =false;
+            }
+        }, 2000);
     }
 
     private void pushDown()

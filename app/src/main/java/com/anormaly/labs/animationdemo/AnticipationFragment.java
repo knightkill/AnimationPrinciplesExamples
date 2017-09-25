@@ -1,6 +1,7 @@
 package com.anormaly.labs.animationdemo;
 
 
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -55,7 +56,6 @@ public class AnticipationFragment extends Fragment implements IndexActivity.OnCl
     {
         View view = inflater.inflate(R.layout.fragment_anticipation, container, false);
         ButterKnife.bind(this, view);
-        view.findViewById(R.id.box).ad
         mView = view;
 
         // Inflate the layout for this fragment
@@ -97,6 +97,8 @@ public class AnticipationFragment extends Fragment implements IndexActivity.OnCl
                         + view.getMeasuredWidth()
         );
     }
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
@@ -107,7 +109,7 @@ public class AnticipationFragment extends Fragment implements IndexActivity.OnCl
     @Override
     public void onReplayClick()
     {
-        box.setRotationX(30);
+        //box.setRotationY(20);
         log("replay",box);
     }
 
