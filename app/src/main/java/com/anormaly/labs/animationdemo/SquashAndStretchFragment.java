@@ -19,6 +19,8 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
+import com.anormaly.labs.animationdemo.animationprinciples.anticipation.AnticipationFragment;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -32,7 +34,7 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
 
     @Nullable
     @BindView(R.id.box)
-    BoxView box;
+    View box;
 
     @BindView(R.id.layout)
     ConstraintLayout layout;
@@ -85,7 +87,7 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
     @Override
     public void onNextClick()
     {
-        ActivityUtils.addFragmentToActivity(getFragmentManager(),AnticipationFragment.newInstance(box.getX(),box.getY()),R.id.content_view);
+        ActivityUtils.addFragmentToActivity(getFragmentManager(), AnticipationFragment.newInstance(box.getX(),box.getY()),R.id.content_view);
     }
 
     boolean appCloseConfirmation = false;
@@ -186,45 +188,6 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
         sequentializeAnimation.playSequentially(boxAnticipate,boxAnticipateReleaseAndElongate,boxOvershootShot);
         sequentializeAnimation.setStartDelay(0);
         sequentializeAnimation.start();
-
-
-
-
-        /*box.animate().scaleY(0.9f).scaleX(1.3f).setInterpolator(new FastOutSlowInInterpolator()).setListener(new Animator.AnimatorListener()
-        {
-            @Override
-            public void onAnimationEnd(Animator animation)
-            {
-                box.animate().scaleY(1.5f).scaleX(0.5f).setInterpolator(new FastOutSlowInInterpolator()).setListener(new Animator.AnimatorListener()
-                {
-                    @Override
-                    public void onAnimationEnd(Animator animation)
-                    {
-                        box.animate().scaleY(1f).scaleX(1f).y(layout.getHeight()/2).setInterpolator(new FastOutSlowInInterpolator());
-                    }
-
-                    @Override public void onAnimationStart(Animator animation) {
-
-                    }
-                    @Override public void onAnimationCancel(Animator animation) {
-
-                    }
-                    @Override public void onAnimationRepeat(Animator animation) {
-
-                    }
-                });
-            }
-            @Override public void onAnimationStart(Animator animation){}
-
-            @Override public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override public void onAnimationRepeat(Animator animation) {
-
-            }
-
-        });*/
     }
 
     private void log()

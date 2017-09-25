@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.anormaly.labs.animationdemo.SquashAndStretchFragment"
-    tools:showIn="@layout/activity_splash"
+    tools:showIn="@layout/activity_index"
     android:id="@+id/layout"
     >
 
-    <com.anormaly.labs.animationdemo.BoxView
+    <View
         android:id="@+id/box"
         android:layout_width="100dp"
         android:layout_height="100dp"

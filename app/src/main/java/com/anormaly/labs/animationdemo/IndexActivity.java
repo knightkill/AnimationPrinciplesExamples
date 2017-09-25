@@ -21,6 +21,8 @@ public class IndexActivity extends AppCompatActivity
     private static final String TAG = IndexActivity.class.getSimpleName();
     public static final String BOX_POSITION_X = "box_x";
     public static final String BOX_POSITION_Y = "box_y";
+    public static final String BOX_WIDTH = "width";
+    public static final String BOX_HEIGHT = "height";
 
     @BindView(R.id.next_fab)
     FloatingActionButton nextFAB;
@@ -41,7 +43,7 @@ public class IndexActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_index);
         ButterKnife.bind(this);
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),SquashAndStretchFragment.newInstance(),R.id.content_view);
         animations();
@@ -100,7 +102,6 @@ public class IndexActivity extends AppCompatActivity
     @OnTouch(R.id.replay_fab)
     public boolean onReplayTouch(View view, MotionEvent event)
     {
-
         switch (event.getAction())
         {
             case MotionEvent.ACTION_DOWN:
