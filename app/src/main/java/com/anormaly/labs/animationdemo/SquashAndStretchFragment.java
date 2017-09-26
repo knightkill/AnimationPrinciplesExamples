@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
@@ -40,6 +41,9 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
     @BindView(R.id.layout)
     ConstraintLayout layout;
     private boolean jumped = false;
+    private float x = Float.MAX_VALUE;
+    private float y = Float.MAX_VALUE;
+    private boolean firstTime = true;
 
     public SquashAndStretchFragment()
     {
@@ -52,6 +56,26 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
         return fragment;
     }
 
+    public static SquashAndStretchFragment newInstance(float x,float y)
+    {
+        SquashAndStretchFragment fragment = new SquashAndStretchFragment();
+        Bundle bundle = new Bundle();
+        bundle.putFloat(IndexActivity.BOX_POSITION_X, x);
+        bundle.putFloat(IndexActivity.BOX_POSITION_Y, y);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        if(getArguments()!=null){
+            x = getArguments().getFloat(IndexActivity.BOX_POSITION_X, Float.MAX_VALUE);
+            y = getArguments().getFloat(IndexActivity.BOX_POSITION_Y, Float.MAX_VALUE);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -59,6 +83,30 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
         View view = inflater.inflate(R.layout.fragment_squash_and_stretch, container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+        {
+            @Override
+            public void onGlobalLayout()
+            {
+                if(firstTime)
+                {
+                    firstTime = false;
+                    if (x != Float.MAX_VALUE || y != Float.MAX_VALUE)
+                    {
+                        box.setX(x-box.getWidth()/2);
+                        box.setY(y-box.getHeight());
+                        box.setPivotY(box.getHeight());
+                        box.animate().y(layout.getHeight()-box.getHeight()).x(layout.getWidth()/2-box.getWidth()/2);
+                    }
+                }
+            }
+        });
     }
 
     @Override

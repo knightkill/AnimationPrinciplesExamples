@@ -128,7 +128,7 @@ public class AnticipationFragment extends Fragment implements IndexActivity.OnCl
     public void onPrevClick()
     {
         box.onPrevClick();
-        ActivityUtils.addFragmentToActivity(getFragmentManager(), SquashAndStretchFragment.newInstance(), R.id.content_view);
+        ActivityUtils.addFragmentToActivity(getFragmentManager(), SquashAndStretchFragment.newInstance(box.getBoxX(),box.getBoxY()), R.id.content_view);
     }
 
 

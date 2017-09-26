@@ -128,14 +128,14 @@ public class AnticipationView extends View implements IndexActivity.OnClickListe
     {
         //canvas.drawRect(boxRect,paintBox);
         pathBox.reset();
-        pathBox.moveTo(getCanvasWidth() / 2 - width / 2 + distanceOffset, getCanvasHeight() + heightOffset);
-        pathBox.lineTo(getCanvasWidth() / 2 - width / 2 + offsetX + distanceOffset, getCanvasHeight() - height + heightOffset);
-        pathBox.lineTo(getCanvasWidth() / 2 + width / 2 + offsetX + distanceOffset, getCanvasHeight() - height + heightOffset);
-        pathBox.lineTo(getCanvasWidth() / 2 + width / 2 + distanceOffset, getCanvasHeight() + heightOffset);
+        pathBox.moveTo(getCanvasWidth() / 2 - width / 2 + distanceOffset, getCanvasHeight()/2 + heightOffset);
+        pathBox.lineTo(getCanvasWidth() / 2 - width / 2 + offsetX + distanceOffset, getCanvasHeight()/2 - height + heightOffset);
+        pathBox.lineTo(getCanvasWidth() / 2 + width / 2 + offsetX + distanceOffset, getCanvasHeight()/2 - height + heightOffset);
+        pathBox.lineTo(getCanvasWidth() / 2 + width / 2 + distanceOffset, getCanvasHeight()/2 + heightOffset);
         canvas.drawPath(pathBox, paintBox);
 
         boxX = getCanvasWidth() / 2 + distanceOffset;
-        boxY = getCanvasHeight() + heightOffset;
+        boxY = getCanvasHeight()/2 + heightOffset;
 
     }
 
@@ -272,7 +272,7 @@ public class AnticipationView extends View implements IndexActivity.OnClickListe
             public void onAnimationEnd(Animator animation)
             {
                 offsetX = -(getCanvasWidth() / 4) / 3;
-                heightOffset = -getCanvasHeight() / 2 + height / 2;
+                heightOffset = getCanvasHeight() / 2;
             }
 
             @Override
@@ -424,7 +424,7 @@ public class AnticipationView extends View implements IndexActivity.OnClickListe
                 invalidate();
             }
         });
-        ValueAnimator translateYAnimator = ValueAnimator.ofFloat(y, getCanvasHeight());
+        ValueAnimator translateYAnimator = ValueAnimator.ofFloat(y, getCanvasHeight()/2);
         translateYAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
         {
             @Override

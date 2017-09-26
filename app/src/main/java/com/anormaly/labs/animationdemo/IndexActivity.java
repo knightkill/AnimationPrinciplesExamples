@@ -21,6 +21,10 @@ public class IndexActivity extends AppCompatActivity
     private static final String TAG = IndexActivity.class.getSimpleName();
     public static final String BOX_POSITION_X = "box_x";
     public static final String BOX_POSITION_Y = "box_y";
+    public static final String BOX_POSITION_X1 = "x1";
+    public static final String BOX_POSITION_Y1 = "y1";
+    public static final String BOX_POSITION_X2 = "x2";
+    public static final String BOX_POSITION_Y2 = "y2";
     public static final String BOX_WIDTH = "width";
     public static final String BOX_HEIGHT = "height";
 
