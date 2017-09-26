@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -154,11 +155,13 @@ public class StagingFragment extends Fragment implements IndexActivity.OnClickLi
             isStagingStage = true;
             final AnimatorSet replayAnimator = new AnimatorSet();
             replayAnimator.playTogether(
+
                     ObjectAnimator.ofFloat(boxMain,"scaleX",2f),
                     ObjectAnimator.ofFloat(boxMain,"scaleY",2f),
-                    ObjectAnimator.ofArgb(boxMain,"backgroundColor", ContextCompat.getColor(getContext(),R.color.colorAccentDark)),
+                    ObjectAnimator.ofFloat(boxMain,"elevation",3),
+                    ObjectAnimator.ofArgb(boxMain,"backgroundColor", ContextCompat.getColor(getContext(),R.color.colorPrimaryDark),0xff0849E6),
                     ObjectAnimator.ofFloat(boxMain,"translationY",boxMain.getHeight()/2),
-                    ObjectAnimator.ofFloat(boxMain,"rotationX",20),
+                    ObjectAnimator.ofFloat(boxMain,"rotationX",10),
                     ObjectAnimator.ofFloat(boxRight,"alpha",0.5f),
                     ObjectAnimator.ofFloat(boxLeft,"alpha",0.5f),
                     ObjectAnimator.ofFloat(boxRight,"scaleX",0.5f),
@@ -166,6 +169,7 @@ public class StagingFragment extends Fragment implements IndexActivity.OnClickLi
                     ObjectAnimator.ofFloat(boxLeft,"scaleX",0.5f),
                     ObjectAnimator.ofFloat(boxLeft,"scaleY",0.5f)
             );
+            replayAnimator.setDuration(350);
             replayAnimator.start();
         }else{
             isStagingStage = false;
@@ -173,7 +177,8 @@ public class StagingFragment extends Fragment implements IndexActivity.OnClickLi
             replayAnimator.playTogether(
                     ObjectAnimator.ofFloat(boxMain,"scaleX",1f),
                     ObjectAnimator.ofFloat(boxMain,"scaleY",1f),
-                    ObjectAnimator.ofArgb(boxMain,"backgroundColor", ContextCompat.getColor(getContext(),R.color.colorPrimaryDark)),
+                    ObjectAnimator.ofFloat(boxMain,"elevation",0),
+                    ObjectAnimator.ofArgb(boxMain,"backgroundColor",0xff0849E6,ContextCompat.getColor(getContext(),R.color.colorPrimaryDark)),
                     ObjectAnimator.ofFloat(boxMain,"translationY",0),
                     ObjectAnimator.ofFloat(boxMain,"rotationX",0),
                     ObjectAnimator.ofFloat(boxRight,"alpha",1f),
@@ -183,6 +188,7 @@ public class StagingFragment extends Fragment implements IndexActivity.OnClickLi
                     ObjectAnimator.ofFloat(boxLeft,"scaleX",1f),
                     ObjectAnimator.ofFloat(boxLeft,"scaleY",1f)
             );
+            replayAnimator.setDuration(350);
             replayAnimator.start();
         }
     }
@@ -190,7 +196,13 @@ public class StagingFragment extends Fragment implements IndexActivity.OnClickLi
     @Override
     public void onNextClick()
     {
-
+        if(isStagingStage){
+            onReplayClick();
+        }else{
+            boxMain.setPivotX(boxMain.getWidth()/2);
+            boxMain.setPivotY(boxMain.getHeight()/2);
+            ActivityUtils.addFragmentToActivity(getFragmentManager(),ArcFragment.newInstance(boxMain.getX(),boxMain.getY()),R.id.content_view);
+        }
     }
 
     @Override
@@ -201,7 +213,6 @@ public class StagingFragment extends Fragment implements IndexActivity.OnClickLi
         }else{
             ActivityUtils.addFragmentToActivity(getFragmentManager(), AnticipationFragment.newInstance(boxMain.getX()-boxMain.getWidth()/2, boxMain.getY()-boxMain.getHeight(),boxMain.getWidth(),boxMain.getHeight()), R.id.content_view);
         }
-
     }
 
     private void log(View view)

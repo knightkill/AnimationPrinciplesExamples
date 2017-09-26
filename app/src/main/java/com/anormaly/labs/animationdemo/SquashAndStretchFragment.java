@@ -3,6 +3,7 @@ package com.anormaly.labs.animationdemo;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Handler;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
