@@ -199,7 +199,6 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
     {
 
         AnimatorSet boxAnticipate = new AnimatorSet();
-
         boxAnticipate.playTogether(
                 ObjectAnimator.ofFloat(box,"scaleY",1f,0.7f),
                 ObjectAnimator.ofFloat(box,"scaleX",1f,1.4f)
@@ -207,11 +206,9 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
         boxAnticipate.setInterpolator(new FastOutLinearInInterpolator());
         boxAnticipate.setDuration(300);
 
-
         float boxToHalfLayoutRatio = 1f +  ((layout.getHeight() / 2) / box.getHeight());
 
         AnimatorSet boxAnticipateReleaseAndElongate = new AnimatorSet();
-
         boxAnticipateReleaseAndElongate.playTogether(
                 ObjectAnimator.ofFloat(box,"scaleY",0.9f,boxToHalfLayoutRatio),
                 ObjectAnimator.ofFloat(box,"scaleX",1.3f,0.8f)
@@ -221,19 +218,16 @@ public class SquashAndStretchFragment extends Fragment implements IndexActivity.
         boxAnticipateReleaseAndElongate.setStartDelay(100);
 
         AnimatorSet boxOvershootShot = new AnimatorSet();
-
         boxOvershootShot.playTogether(
                 ObjectAnimator.ofFloat(box,"scaleY",boxToHalfLayoutRatio,1f),
                 ObjectAnimator.ofFloat(box,"scaleX",0.8f,1f),
                 ObjectAnimator.ofFloat(box,"y",box.getY(),(-box.getHeight()/2)+(layout.getHeight()/2))
         );
-
         boxOvershootShot.setInterpolator(new AnticipateOvershootInterpolator(5f));
         boxOvershootShot.setDuration(200);
         boxOvershootShot.setStartDelay(0);
 
         AnimatorSet sequentializeAnimation = new AnimatorSet();
-
         sequentializeAnimation.playSequentially(boxAnticipate,boxAnticipateReleaseAndElongate,boxOvershootShot);
         sequentializeAnimation.setStartDelay(0);
         sequentializeAnimation.start();

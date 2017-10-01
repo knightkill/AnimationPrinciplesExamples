@@ -148,9 +148,8 @@ public class ArcFragment extends Fragment implements IndexActivity.OnClickListen
                 @Override
                 public boolean onTouch(View v, MotionEvent event)
                 {
-                    Log.d(TAG, "onTouch: " + event.getAction());
                     detector.onTouchEvent(event);
-                    return true;
+                    return false;
                 }
             });
         }else{
@@ -220,8 +219,9 @@ public class ArcFragment extends Fragment implements IndexActivity.OnClickListen
             drawable.start();
 
         layout.addView(dashedCircleImageView, 0);
-        ObjectAnimator.ofFloat(dashedCircleImageView,"alpha",0f,1f).start();
-
+        ObjectAnimator
+                .ofFloat(dashedCircleImageView,"alpha",0f,1f)
+                .start();
 
     }
 
